@@ -6,7 +6,10 @@ defmodule Gist.Gists do
   import Ecto.Query, warn: false
   alias Gist.Repo
 
-  alias Gist.Gists.Post
+  alias Gist.Gists.{
+    Post,
+    SavedPost
+  }
 
   @doc """
   Returns the list of posts.
@@ -100,5 +103,99 @@ defmodule Gist.Gists do
   """
   def change_post(%Post{} = post, attrs \\ %{}) do
     Post.changeset(post, attrs)
+  end
+
+  @doc """
+  Returns the list of saved_posts.
+
+  ## Examples
+
+      iex> list_saved_posts()
+      [%SavedPost{}, ...]
+
+  """
+  def list_saved_posts do
+    Repo.all(SavedPost)
+  end
+
+  @doc """
+  Gets a single saved_post.
+
+  Raises `Ecto.NoResultsError` if the Saved post does not exist.
+
+  ## Examples
+
+      iex> get_saved_post!(123)
+      %SavedPost{}
+
+      iex> get_saved_post!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_saved_post!(id), do: Repo.get!(SavedPost, id)
+
+  @doc """
+  Creates a saved_post.
+
+  ## Examples
+
+      iex> create_saved_post(%{field: value})
+      {:ok, %SavedPost{}}
+
+      iex> create_saved_post(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_saved_post(attrs \\ %{}) do
+    %SavedPost{}
+    |> SavedPost.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a saved_post.
+
+  ## Examples
+
+      iex> update_saved_post(saved_post, %{field: new_value})
+      {:ok, %SavedPost{}}
+
+      iex> update_saved_post(saved_post, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_saved_post(%SavedPost{} = saved_post, attrs) do
+    saved_post
+    |> SavedPost.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a saved_post.
+
+  ## Examples
+
+      iex> delete_saved_post(saved_post)
+      {:ok, %SavedPost{}}
+
+      iex> delete_saved_post(saved_post)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_saved_post(%SavedPost{} = saved_post) do
+    Repo.delete(saved_post)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking saved_post changes.
+
+  ## Examples
+
+      iex> change_saved_post(saved_post)
+      %Ecto.Changeset{data: %SavedPost{}}
+
+  """
+  def change_saved_post(%SavedPost{} = saved_post, attrs \\ %{}) do
+    SavedPost.changeset(saved_post, attrs)
   end
 end

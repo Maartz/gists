@@ -19,4 +19,18 @@ defmodule Gist.GistsFixtures do
 
     post
   end
+
+  @doc """
+  Generate a saved_post.
+  """
+  def saved_post_fixture(attrs \\ %{}) do
+    {:ok, saved_post} =
+      attrs
+      |> Enum.into(%{
+
+      })
+      |> Gist.Gists.create_saved_post()
+
+    saved_post
+  end
 end

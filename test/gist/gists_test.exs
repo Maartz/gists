@@ -60,4 +60,56 @@ defmodule Gist.GistsTest do
       assert %Ecto.Changeset{} = Gists.change_post(post)
     end
   end
+
+  describe "saved_posts" do
+    alias Gist.Gists.SavedPost
+
+    import Gist.GistsFixtures
+
+    @invalid_attrs %{}
+
+    test "list_saved_posts/0 returns all saved_posts" do
+      saved_post = saved_post_fixture()
+      assert Gists.list_saved_posts() == [saved_post]
+    end
+
+    test "get_saved_post!/1 returns the saved_post with given id" do
+      saved_post = saved_post_fixture()
+      assert Gists.get_saved_post!(saved_post.id) == saved_post
+    end
+
+    test "create_saved_post/1 with valid data creates a saved_post" do
+      valid_attrs = %{}
+
+      assert {:ok, %SavedPost{} = saved_post} = Gists.create_saved_post(valid_attrs)
+    end
+
+    test "create_saved_post/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Gists.create_saved_post(@invalid_attrs)
+    end
+
+    test "update_saved_post/2 with valid data updates the saved_post" do
+      saved_post = saved_post_fixture()
+      update_attrs = %{}
+
+      assert {:ok, %SavedPost{} = saved_post} = Gists.update_saved_post(saved_post, update_attrs)
+    end
+
+    test "update_saved_post/2 with invalid data returns error changeset" do
+      saved_post = saved_post_fixture()
+      assert {:error, %Ecto.Changeset{}} = Gists.update_saved_post(saved_post, @invalid_attrs)
+      assert saved_post == Gists.get_saved_post!(saved_post.id)
+    end
+
+    test "delete_saved_post/1 deletes the saved_post" do
+      saved_post = saved_post_fixture()
+      assert {:ok, %SavedPost{}} = Gists.delete_saved_post(saved_post)
+      assert_raise Ecto.NoResultsError, fn -> Gists.get_saved_post!(saved_post.id) end
+    end
+
+    test "change_saved_post/1 returns a saved_post changeset" do
+      saved_post = saved_post_fixture()
+      assert %Ecto.Changeset{} = Gists.change_saved_post(saved_post)
+    end
+  end
 end
