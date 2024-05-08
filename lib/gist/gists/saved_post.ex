@@ -5,17 +5,15 @@ defmodule Gist.Gists.SavedPost do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "saved_posts" do
-
-    field :user_id, :binary_id
-    field :post_id, :binary_id
-
+    belongs_to :user, Gist.Accounts.User
+    belongs_to :post, Gist.Gists.Post
     timestamps(type: :utc_datetime)
   end
 
   @doc false
   def changeset(saved_post, attrs) do
     saved_post
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:user_id, :post_id])
+    |> validate_required([:user_id, :post_id])
   end
 end

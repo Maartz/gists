@@ -52,8 +52,9 @@ defmodule Gist.Gists do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_post(attrs \\ %{}) do
-    %Post{}
+  def create_post(user, attrs \\ %{}) do
+    user
+    |> Ecto.build_assoc(:posts)
     |> Post.changeset(attrs)
     |> Repo.insert()
   end
@@ -146,8 +147,9 @@ defmodule Gist.Gists do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_saved_post(attrs \\ %{}) do
-    %SavedPost{}
+  def create_saved_post(user, attrs \\ %{}) do
+    user
+    |> Ecto.build_assoc(:saved_posts)
     |> SavedPost.changeset(attrs)
     |> Repo.insert()
   end
